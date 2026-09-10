@@ -18,7 +18,7 @@ export function Home() {
   const [items, setItems] = useState<ItemStorage[]>([])
 
   async function handleAdd() {
-    if(!description.trim()) {
+    if (!description.trim()) {
       return Alert.alert("Adicionar", "Informe a descrição para adicionar")
     }
 
@@ -40,7 +40,7 @@ export function Home() {
     try {
       const response = await itemsStorage.getByStatus(filter)
       setItems(response)
-    } catch(error) {
+    } catch (error) {
       console.log(error)
       Alert.alert("Error", "Não foi possível filtrar os itens.")
     }
@@ -50,9 +50,26 @@ export function Home() {
     try {
       await itemsStorage.remove(id)
       await itemsByStatus()
-    } catch(error) {
+    } catch (error) {
       console.log(error)
       Alert.alert("Remover", "Não foi possível remover o item")
+    }
+  }
+
+  function handleClear() {
+    Alert.alert("Limpar", "Deseja remover todos?", [
+      { text: "Não", style: "cancel" },
+      { text: "Sim", onPress: () => onClear() }
+    ])
+  }
+
+  async function onClear() {
+    try {
+      await itemsStorage.clear()
+      setItems([])
+    } catch (error) {
+      console.log(error)
+      Alert.alert("Error", "Não foi possível remover todos os itens")
     }
   }
 
@@ -66,8 +83,8 @@ export function Home() {
 
       <View style={styles.form}>
         <Input placeholder="O que você precisa comprar?"
-        onChangeText={setDescription}
-        value={description}
+          onChangeText={setDescription}
+          value={description}
         />
         <Button title="Adicionar" onPress={handleAdd} />
       </View>
@@ -84,7 +101,10 @@ export function Home() {
             ))
           }
 
-          <TouchableOpacity style={styles.clearButton}>
+          <TouchableOpacity
+            style={styles.clearButton}
+            onPress={handleClear}
+          >
             <Text style={styles.clearText}>Limpar</Text>
           </TouchableOpacity>
         </View>
