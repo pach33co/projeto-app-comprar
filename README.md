@@ -1,6 +1,6 @@
 # Projeto Comprar
 
-![Demonstração do app](./src/assets/documentation/videoApp.gif)
+![Demonstração do app](./src/assets/documentation/VideoApp.gif)
 
 App de lista de compras para facilitar o usuário na hora de ir ao supermercado.
 Desenvolvido para praticar React Native com TypeScript utilizando o Expo.
